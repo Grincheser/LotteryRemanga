@@ -2,9 +2,13 @@
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 // Безопасный запрос к API
+// Безопасный запрос к API через CORS-прокси для работы в обычном браузере
 async function fetchAPI(url) {
     try {
-        const response = await fetch(url);
+        // Добавляем прокси перед ссылкой для обхода блокировки CORS браузером
+        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+        const response = await fetch(proxyUrl);
+        
         if (!response.ok) {
             console.warn(`Запрос вернул статус ${response.status} для URL: ${url}`);
             return null;
