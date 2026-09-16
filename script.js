@@ -2,22 +2,28 @@
 const delay = ms => new Promise(res => setTimeout(res, ms));
 
 // Безопасный запрос к API
-// Безопасный запрос к API через CORS-прокси для работы в обычном браузере
 async function fetchAPI(url) {
-    try {
-        // Добавляем прокси перед ссылкой для обхода блокировки CORS браузером
-        const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
-        const response = await fetch(proxyUrl);
-        
-        if (!response.ok) {
-            console.warn(`Запрос вернул статус ${response.status} для URL: ${url}`);
-            return null;
+    // Список публичных прокси для обхода CORS
+    const proxies = [
+        target => `https://corsproxy.io/?${encodeURIComponent(target)}`,
+        target => `https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`
+    ];
+
+    for (const createProxyUrl of proxies) {
+        try {
+            const proxyUrl = createProxyUrl(url);
+            const response = await fetch(proxyUrl);
+            
+            if (response.ok) {
+                return await response.json();
+            }
+        } catch (e) {
+            console.warn(`Ошибка прокси: ${e.message}, пробуем следующий...`);
         }
-        return await response.json();
-    } catch (e) {
-        console.error("Fetch error:", e);
-        return null;
     }
+
+    console.error("Все CORS-прокси недоступны для URL:", url);
+    return null;
 }
 
 // Парсинг ссылок
