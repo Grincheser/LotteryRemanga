@@ -1,0 +1,13 @@
+{
+  "name": "lottery-remanga",
+  "version": "1.0.0",
+  "description": "Автоматизация розыгрышей Remanga",
+  "main": "main.js",
+  "scripts": {
+    "dist": "electron-builder --win nsis"
+  },
+  "devDependencies": {
+    "electron": "^28.0.0",
+    "electron-builder": "^24.9.0"
+  }
+}

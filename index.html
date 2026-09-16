@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>LotteryRemanga</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Левая колонка: Настройки и параметры -->
+    <div class="left-panel">
+      <h2>Настройки розыгрыша</h2>
+      
+      <div class="form-group">
+        <label for="postUrl">Ссылка на пост форума:</label>
+        <input type="text" id="postUrl" placeholder="https://remanga.org/forum/...">
+      </div>
+
+      <div class="form-group">
+        <label for="userUrl">Ссылка на профиль организатора:</label>
+        <input type="text" id="userUrl" placeholder="https://remanga.org/user/123456">
+      </div>
+
+      <div class="checkbox-group">
+        <label><input type="checkbox" id="condComment" checked> Проверять комментарии</label>
+        <label><input type="checkbox" id="condLike"> Проверять лайки</label>
+        <label><input type="checkbox" id="condFollow"> Проверять подписку</label>
+        <label><input type="checkbox" id="multiComments"> Учитывать каждый комментарий (в разработке)</label>
+      </div>
+
+      <div class="form-group inline">
+        <label for="winnersCount">Количество победителей:</label>
+        <input type="number" id="winnersCount" value="1" min="1" max="100">
+      </div>
+
+      <button id="startBtn" onclick="startLottery()">Запустить розыгрыш</button>
+      
+      <div id="status" class="status-box">Готов к работе</div>
+    </div>
+
+    <!-- Правая колонка: Результаты -->
+    <div class="right-panel">
+      <h2>Результаты</h2>
+      
+      <div id="resultsCard" style="display: none;">
+        <textarea id="resultText" readonly placeholder="Здесь будут результаты..."></textarea>
+        
+        <div class="actions">
+          <button onclick="copyResults()">Скопировать</button>
+          <button onclick="downloadResults()">Скачать .txt</button>
+        </div>
+      </div>
+
+      <div id="placeholderText" class="placeholder">
+        Запустите розыгрыш, чтобы увидеть список победителей.
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
